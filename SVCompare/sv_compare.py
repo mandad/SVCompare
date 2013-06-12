@@ -55,6 +55,7 @@ def sv_import(filename, lat, ret_full = False):
             in_water_data['pressure']-=Z0 #' Corrected pressure
             in_water_data = scipy.compress(in_water_data['pressure']>-0.001,
                 in_water_data) #Ignore data in air (corrected pressure<0)
+                
             '''
             # Averaging not desired in this case
             if IDiverFlag:
@@ -66,7 +67,8 @@ def sv_import(filename, lat, ret_full = False):
             fields = list(in_water_data.dtype.names)
             try: fields.remove('flag')
             except: pass #didn't have flag??
-            avg_data = Profile.CosineAvg(in_water_data, fields, binsize, binwidth, WWmin, WWMul)'''
+            avg_data = Profile.CosineAvg(in_water_data, fields, binsize, binwidth, WWmin, WWMul)
+            '''
             
             avg_data = in_water_data
 
@@ -109,8 +111,16 @@ def sv_import(filename, lat, ret_full = False):
             newdata.SetYMetricName('depth')
             final_prof = Profile.ScipyProfile(newdata.compress(significant>0), 
                 **newdata.get_keyargs())
-            #print final_prof['depth'].compress(final_prof['depth'] >= 1)
-            valid_depths = final_prof['depth'] >= 1
+
+            #create histogram to determine low depth cutoff
+            hist = np.histogram(final_prof['depth'], 
+                np.arange(np.floor(final_prof['depth'].min()), 
+                np.ceil(final_prof['depth'].max()), 0.5))
+            #min_depth = np.ma.masked_where(hist[0] > 10 , hist[1][:-1]).min()
+            min_depth = hist[1][hist[0].argmax() + 1]
+            #print "Min Depth: %.1f" % min_depth
+            
+            valid_depths = final_prof['depth'] >= min_depth
             if ret_full:
                 return Profile.ScipyProfile(final_prof.compress(valid_depths), 
                     **final_prof.get_keyargs())
@@ -133,8 +143,8 @@ def compare_casts(cast_ref, cast_comp):
     in the reference cast.
     '''
     # Fill these out to define the colors being compared
-    ref_color_str = 'Yellow'
-    comp_color_str = 'MVP'
+    ref_color_str = 'Purple'
+    comp_color_str = 'Black'
     
     interpf = scipy.interpolate.interp1d(cast_comp[0], cast_comp[1])
     cast_ref_depths = np.logical_and(cast_ref[0] >= np.min(cast_comp[0]), 
@@ -144,7 +154,7 @@ def compare_casts(cast_ref, cast_comp):
     #    cast_ref[0] <= np.max(cast_comp[0]))
     comp_vals = interpf(cast_ref[0][cast_ref_depths])
     diffs = cast_ref[1][cast_ref_depths] - comp_vals
-    print diffs
+    #print diffs
     print '\n====================================='
     print ' Sound Speed Cast Comparison Results'
     print '====================================='
