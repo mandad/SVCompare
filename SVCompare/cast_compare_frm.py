@@ -17,9 +17,10 @@ import wx.xrc
 class frm_compare ( wx.Frame ):
 	
 	def __init__( self, parent ):
-		wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = wx.EmptyString, pos = wx.DefaultPosition, size = wx.Size( 556,467 ), style = wx.DEFAULT_FRAME_STYLE|wx.TAB_TRAVERSAL )
+		wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = wx.EmptyString, pos = wx.DefaultPosition, size = wx.Size( 550,800 ), style = wx.DEFAULT_FRAME_STYLE|wx.TAB_TRAVERSAL )
 		
 		self.SetSizeHintsSz( wx.DefaultSize, wx.DefaultSize )
+		self.SetBackgroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_WINDOW ) )
 		
 		self.mnubar_main = wx.MenuBar( 0 )
 		self.mnu_file = wx.Menu()
@@ -31,7 +32,7 @@ class frm_compare ( wx.Frame ):
 		
 		fgSizer2 = wx.FlexGridSizer( 0, 1, 0, 0 )
 		fgSizer2.AddGrowableCol( 0 )
-		fgSizer2.AddGrowableRow( 3 )
+		fgSizer2.AddGrowableRow( 4 )
 		fgSizer2.SetFlexibleDirection( wx.BOTH )
 		fgSizer2.SetNonFlexibleGrowMode( wx.FLEX_GROWMODE_SPECIFIED )
 		
@@ -82,10 +83,15 @@ class frm_compare ( wx.Frame ):
 		
 		fgSizer2.Add( bSizer3, 1, wx.EXPAND, 5 )
 		
+		self.chk_save_output = wx.CheckBox( self, wx.ID_ANY, u"Save Output", wx.DefaultPosition, wx.DefaultSize, 0 )
+		fgSizer2.Add( self.chk_save_output, 0, wx.ALL, 5 )
+		
 		self.btn_run = wx.Button( self, wx.ID_ANY, u"Run Comparison", wx.DefaultPosition, wx.DefaultSize, 0 )
 		fgSizer2.Add( self.btn_run, 0, wx.ALIGN_CENTER, 5 )
 		
 		self.txt_output = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.Size( -1,-1 ), wx.HSCROLL|wx.TE_MULTILINE|wx.TE_READONLY )
+		self.txt_output.SetFont( wx.Font( wx.NORMAL_FONT.GetPointSize(), 76, 90, 90, False, wx.EmptyString ) )
+		
 		fgSizer2.Add( self.txt_output, 2, wx.ALL|wx.EXPAND, 5 )
 		
 		
