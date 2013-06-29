@@ -18,15 +18,17 @@ class CompareFrame(frm_compare):
         path = os.path.split(self.fp_ref.GetPath())[0]
         ref_color = self.ch_color_ref.GetStringSelection()
         comp_color = self.ch_color_comp.GetStringSelection()
+        save_output = self.chk_save_output.GetValue()
 
         results = sv_compare.compare_files(self.fp_ref.GetPath(),
             self.fp_comp.GetPath(), ref_color, comp_color,
-            float(self.txt_lat.GetValue()))
+            float(self.txt_lat.GetValue()), save_output)
 
         self.txt_output.SetValue(results[0] + '\n' + results[1])
-        outfile = open(os.path.join(path, sv_compare.save_name(ref_color,
-            comp_color, 'txt')), 'w')
-        outfile.writelines(results)
+        if save_output:
+            outfile = open(os.path.join(path, sv_compare.save_name(ref_color,
+                comp_color, 'txt')), 'w')
+            outfile.writelines(results)
 
 
 def main():

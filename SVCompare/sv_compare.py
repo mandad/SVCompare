@@ -141,13 +141,13 @@ def get_data_only(profile):
         profile['soundspeed']))
 
 def compare_files(cast_ref_path, cast_comp_path, cast_ref_color,
-    cast_comp_color, lat):
+    cast_comp_color, lat, save_output):
     prof1 = sv_import(cast_ref_path, lat, True)
     prof2 = sv_import(cast_comp_path, lat, True)
     save_path = os.path.join(os.path.split(cast_ref_path)[0], 
         save_name(cast_ref_color, cast_comp_color, 'png'))
     results = compare_casts(get_data_only(prof1), get_data_only(prof2), cast_ref_color,
-        cast_comp_color, True, savepath=save_path)
+        cast_comp_color, save_output, savepath=save_path)
     velocipy_results = velocipy_compare(prof1, prof2)
     return (results, velocipy_results)
         
