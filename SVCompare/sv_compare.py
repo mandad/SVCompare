@@ -14,6 +14,10 @@ import scipy.interpolate
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 
+# Fill these out to define the colors being compared
+def_ref_color_str = 'Purple'
+def_comp_color_str = 'Black'
+
 def sv_import(filename, lat, ret_full = False):
     '''Returns an array of valid sound speed points for depths recorded by
     the CTD in a CNV file.  Not averaged.
@@ -24,7 +28,7 @@ def sv_import(filename, lat, ret_full = False):
         try:
             cast_data = Profile.ScipyProfile.parseRawProfile(filename)[0]
         except Exception, e:
-            print "Error: ", e
+            print "Error parsing calc file: ", e
             return
         binsz = 0.1
         return cast_data.QC(bin=(cast_data.dtype.names, binsz))
@@ -33,7 +37,7 @@ def sv_import(filename, lat, ret_full = False):
         try:
             cnv_data = Profile.ScipyProfile.parseRawProfile(filename)[0]
         except Exception, e:
-            print "Error: ", e
+            print "Error parsing cnv file: ", e
             return
         
         cnv_name = cnv_data.metadata['Filename']
@@ -135,16 +139,22 @@ def sv_import(filename, lat, ret_full = False):
 def get_data_only(profile):
     return scipy.vstack((profile['depth'], 
         profile['soundspeed']))
+
+def compare_files(cast_ref_path, cast_comp_path, cast_ref_color,
+    cast_comp_color, lat):
+    prof1 = sv_import(filename1, lat, True)
+    prof2 = sv_import(filename2, lat, True)
+    compare_casts(get_data_only(prof1), get_data_only(prof2))
+    
+
         
-def compare_casts(cast_ref, cast_comp):
+def compare_casts(cast_ref, cast_comp, ref_color_str = def_ref_color_str,
+    comp_color_str = def_comp_color_str):
     '''Expects casts to be in condensed form: array with cast[0] = depth,
     cast[1] = sound speed
     Outputs comparison metrics of comparison cast interpolated to depths
     in the reference cast.
     '''
-    # Fill these out to define the colors being compared
-    ref_color_str = 'Purple'
-    comp_color_str = 'Black'
     
     interpf = scipy.interpolate.interp1d(cast_comp[0], cast_comp[1])
     cast_ref_depths = np.logical_and(cast_ref[0] >= np.min(cast_comp[0]), 
