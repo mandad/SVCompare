@@ -1,0 +1,39 @@
+import wx
+import wx.xrc
+from cast_compare_frm import frm_compare
+import sv_compare
+import os.path
+
+#size 550x641
+
+class CompareFrame(frm_compare):
+    def __init__(self, parent):
+        frm_compare.__init__(self, parent)
+
+    def btn_run_click(self, event):
+        # print self.fp_ref.GetPath()
+        # print self.ch_color_ref.GetStringSelection()
+        # print float(self.txt_lat.GetValue()) + 10
+        self.txt_output.SetValue('')
+        path = os.path.split(self.fp_ref.GetPath())[0]
+        ref_color = self.ch_color_ref.GetStringSelection()
+        comp_color = self.ch_color_comp.GetStringSelection()
+
+        results = sv_compare.compare_files(self.fp_ref.GetPath(),
+            self.fp_comp.GetPath(), ref_color, comp_color,
+            float(self.txt_lat.GetValue()))
+
+        self.txt_output.SetValue(results[0] + '\n' + results[1])
+        outfile = open(os.path.join(path, sv_compare.save_name(ref_color,
+            comp_color, 'txt')), 'w')
+        outfile.writelines(results)
+
+
+def main():
+    app = wx.App(0)
+    app.frame = CompareFrame(None)
+    app.frame.Show()
+    app.MainLoop()
+
+if __name__ == '__main__':
+    main()
