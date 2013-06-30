@@ -27,7 +27,7 @@
         <object class="Frame" expanded="1">
             <property name="aui_managed">0</property>
             <property name="aui_manager_style">wxAUI_MGR_DEFAULT</property>
-            <property name="bg">wxSYS_COLOUR_WINDOW</property>
+            <property name="bg">wxSYS_COLOUR_3DLIGHT</property>
             <property name="center">wxBOTH</property>
             <property name="context_help"></property>
             <property name="context_menu">1</property>
@@ -42,7 +42,7 @@
             <property name="minimum_size"></property>
             <property name="name">frm_compare</property>
             <property name="pos"></property>
-            <property name="size">550,800</property>
+            <property name="size">550,650</property>
             <property name="style">wxDEFAULT_FRAME_STYLE</property>
             <property name="subclass"></property>
             <property name="title"></property>
@@ -165,7 +165,7 @@
                             <object class="wxFlexGridSizer" expanded="1">
                                 <property name="cols">3</property>
                                 <property name="flexible_direction">wxHORIZONTAL</property>
-                                <property name="growablecols"></property>
+                                <property name="growablecols">1</property>
                                 <property name="growablerows"></property>
                                 <property name="hgap">0</property>
                                 <property name="minimum_size"></property>
