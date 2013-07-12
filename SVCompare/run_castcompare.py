@@ -2,7 +2,7 @@ import wx
 import wx.xrc
 import os
 from cast_compare_frm import frm_compare
-if os.name != 'nt':
+if os.name == 'nt':
     import sv_compare
 import os.path
 
