@@ -134,7 +134,7 @@ def sv_import(filename, lat, ret_full = False):
         else:
             print "Instrument not in water"
     else:
-        print 'Format unrecognised.'
+        print 'Format unrecognized.'
 
 def get_data_only(profile):
     return scipy.vstack((profile['depth'], 
@@ -181,13 +181,13 @@ def compare_casts(cast_ref, cast_comp, ref_color_str = def_ref_color_str,
     ref_color = get_plot_color(ref_color_str)
     comp_color = get_plot_color(comp_color_str)
     plt.plot(cast_ref[1,cast_ref_depths], cast_ref[0,cast_ref_depths], 
-        c=ref_color, marker='s', label='Reference Cast', linewidth=2, mew=0, 
-        ms=8)
+        c=ref_color, markersize=7, marker='s', label='Reference Cast',  
+        linewidth=2, mew=0, ms=8)
     plt.hold(True)
-    plt.plot(cast_comp[1], cast_comp[0], c=comp_color, marker='D', 
+    plt.plot(cast_comp[1], cast_comp[0], c=comp_color, markersize=5, marker='D', 
         label='Comparison Cast', linewidth=2, mew=0)
-    plt.plot(comp_vals, cast_ref[0,cast_ref_depths], c=comp_color, marker='o', 
-        label='Comparison Points', linewidth=2, ls='None', mew=0)
+    plt.plot(comp_vals, cast_ref[0,cast_ref_depths], c=comp_color, markersize=5,  
+        marker='o', label='Comparison Points', linewidth=2, ls='None', mew=0)
     
     #format the plot
     plt.title('CTD Comparison: ' + comp_color_str + ' vs. ' + ref_color_str)

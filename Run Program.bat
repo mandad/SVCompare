@@ -1,0 +1,1 @@
+call "C:\Program Files (x86)\Pydro\python.exe" .\code\run_castcompare.py
