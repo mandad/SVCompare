@@ -46,6 +46,9 @@ class frm_compare ( wx.Frame ):
 		fgSizer3.Add( self.m_staticText2, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5 )
 		
 		self.fp_ref = wx.FilePickerCtrl( self, wx.ID_ANY, wx.EmptyString, u"Select a file", u"CNV Files|*.cnv|CALC files|*.cnv", wx.DefaultPosition, wx.Size( -1,-1 ), wx.FLP_CHANGE_DIR|wx.FLP_DEFAULT_STYLE|wx.FLP_FILE_MUST_EXIST|wx.FLP_OPEN|wx.FLP_USE_TEXTCTRL )
+		self.fp_ref.SetMinSize( wx.Size( 200,-1 ) )
+		self.fp_ref.SetMaxSize( wx.Size( 500,-1 ) )
+		
 		fgSizer3.Add( self.fp_ref, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5 )
 		
 		ch_color_refChoices = [ u"Yellow", u"Purple", u"Black", u"Green", u"White", u"MVP", u"Launch MVP" ]

@@ -2,11 +2,9 @@ import wx
 import wx.xrc
 import os
 from cast_compare_frm import frm_compare
-if os.name != 'nt':
-    import sv_compare
+# if os.name == 'nt':
+import sv_compare
 import os.path
-
-#size 550x641
 
 class CompareFrame(frm_compare):
     def __init__(self, parent):
